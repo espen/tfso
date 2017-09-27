@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "tfso/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "TFSO"
+  spec.name          = "tfso"
   spec.version       = TFSO::VERSION
   spec.authors       = ["Espen Antonsen"]
   spec.email         = ["espen@inspired.no"]
