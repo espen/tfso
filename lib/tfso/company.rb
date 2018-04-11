@@ -80,6 +80,12 @@ module TFSO
           }
         }
       end
+      if company[:mobile_phone_number]
+        company[:PhoneNumbers] = {:Mobile => {
+            :Value => company.delete(:mobile_phone_number)
+          }
+        }
+      end
       if company[:billing_address]
         company[:Addresses] = {:Invoice => {
             :Name => company.delete(:billing_name) || company[:name],
