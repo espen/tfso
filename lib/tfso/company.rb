@@ -53,6 +53,9 @@ module TFSO
     end
 
     def transform_attributes(company)
+      company[:EmailAddresses] ||= []
+      company[:PhoneNumbers] ||= []
+      company[:Addresses] ||= []
       if company[:billing_id]
         company[:id] = company.delete(:billing_id)
       else
@@ -63,31 +66,31 @@ module TFSO
         company[:name] = company.delete(:billing_name)
       end
       if company[:billing_email]
-        company[:EmailAddresses] = {:Invoice => {
+        company[:EmailAddresses] << {:Invoice => {
             :Value => company.delete(:billing_email)
           }
         }
       end
       if company[:email]
-        company[:EmailAddresses] = {:Work => {
+        company[:EmailAddresses] << {:Work => {
             :Value => company.delete(:email)
           }
         }
       end
       if company[:phone_number]
-        company[:PhoneNumbers] = {:Work => {
+        company[:PhoneNumbers] << {:Work => {
             :Value => company.delete(:phone_number)
           }
         }
       end
       if company[:mobile_phone_number]
-        company[:PhoneNumbers] = {:Mobile => {
+        company[:PhoneNumbers] << {:Mobile => {
             :Value => company.delete(:mobile_phone_number)
           }
         }
       end
       if company[:billing_address]
-        company[:Addresses] = {:Invoice => {
+        company[:Addresses] << {:Invoice => {
             :Name => company.delete(:billing_name) || company[:name],
             :Street => company.delete(:billing_street),
             :PostalCode => company.delete(:billing_postal_code),
