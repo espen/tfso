@@ -2,6 +2,7 @@ require 'savon'
 require "tfso/version"
 require 'tfso/helpers'
 require 'tfso/authentication'
+require 'tfso/client'
 require 'tfso/company'
 require 'tfso/invoice'
 require 'tfso/payment'
