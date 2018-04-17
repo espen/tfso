@@ -54,7 +54,7 @@ module TFSO
       when :draft
         'Offer'
       else
-        'Offer'
+        invoice[:state]
       end
       invoice_info = {
         OrderStatus: state,
@@ -65,16 +65,13 @@ module TFSO
         InvoiceEmailAddress: invoice[:customer_email],
         InvoiceRows: []
       }
+      invoice_info[:TypeOfSaleId] = invoice[:type_of_sale_id]
+      invoice_info[:PaymentTime] = invoice[:payment_time]
       if invoice[:currency]
-        invoice_info[:TypeOfSaleId] = -98
         invoice_info[:Currency] = {
           Symbol: invoice[:currency],
           Rate: invoice[:currency_rate].to_f,
         }
-        invoice_info[:PaymentTime] = 0
-      else
-        invoice_info[:TypeOfSaleId] = -100
-        invoice_info[:PaymentTime] = 7
       end
       invoice_info[:InvoiceTitle] = invoice[:title] if invoice[:title]
       invoice_info[:InvoiceText] = invoice[:description] if invoice[:description]
