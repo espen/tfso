@@ -99,6 +99,16 @@ module TFSO
             :Country => company.delete(:billing_country_code)
           }
         }
+        company[:Addresses] << {:Delivery => {
+            :Name => company[:name] || company.delete(:billing_name),
+            :Street => company.delete(:billing_street),
+            :PostalCode => company.delete(:billing_postal_code),
+            :PostalArea => company.delete(:billing_city),
+            :State => company.delete(:billing_state),
+            :Country => company.delete(:billing_country_code)
+          }
+        }
+
         company.delete(:billing_address)
       end
       if company[:tfso]
