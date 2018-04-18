@@ -7,6 +7,7 @@ module TFSO
         @savon_client.globals.proxy('http://localhost:8080')
         @savon_client.globals.ssl_verify_mode(:none)
       end
+      @savon_client.globals.unwrap(true)
     end
 
     def savon_client
