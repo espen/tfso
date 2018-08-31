@@ -25,7 +25,12 @@ module TFSO
 
     def identities
       response = savon_client.call(:get_identities, cookies: @cookies )
-      response.body[:get_identities_response][:get_identities_result].first.last
+      list = response.body[:get_identities_response][:get_identities_result][:identity]
+      if list.is_a?(Hash)
+        [list]
+      else
+        list
+      end
     end
 
     def identity_id

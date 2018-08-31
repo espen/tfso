@@ -5,6 +5,19 @@ class TFSOTest < Minitest::Test
     refute_nil ::TFSO::VERSION
   end
 
+  def test_can_get_identities
+    auth = TFSO::Authentication.new(ENV['TFSO_APPLICATION_ID'])
+    auth.authenticate(
+      ENV['TFSO_USERNAME'],
+      ENV['TFSO_PASSWORD'],
+      ENV['TFSO_IDENTITY_ID']
+    )
+    identites = auth.identities
+    assert identites.is_a?(Array)
+    assert !identites.empty?
+    assert_equal 'Webservices', identites.find{|identity|identity[:id] == ENV['TFSO_IDENTITY_ID']}[:user][:name]
+  end
+
   def test_can_get_type_groups
     auth = TFSO::Authentication.new(ENV['TFSO_APPLICATION_ID'])
     auth.authenticate(
