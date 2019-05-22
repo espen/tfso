@@ -40,12 +40,10 @@ module TFSO
       end
     end
 
-    def create(invoice, items)
-      response = savon_client.call(:save_invoices, message: {invoices: [{InvoiceOrder: transform_attributes(invoice, items) }] }, cookies: @cookies)
+    def create(order_attributes)
+      response = savon_client.call(:save_invoices, message: {invoices: [{InvoiceOrder: order_attributes }] }, cookies: @cookies)
       response.body[:save_invoices_response][:save_invoices_result][:invoice_order]
     end
-
-    private
 
     def transform_attributes(invoice, items)
       state = case invoice[:state]

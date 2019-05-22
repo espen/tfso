@@ -41,7 +41,7 @@ company_attributes = {
     DistributionMethod: 'EMail'
   }
 }
-company = tfso_company.create( tfso_company.transform_attributes(company_attributes) )
+company = tfso_company.create(tfso_company.transform_attributes(company_attributes))
 puts company[:id]
 ```
 
