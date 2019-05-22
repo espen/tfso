@@ -70,24 +70,28 @@ module TFSO
             :Value => company.delete(:billing_email)
           }
         }
+        company.delete(:billing_email)
       end
       if company[:email]
         company[:EmailAddresses] << {:Work => {
             :Value => company.delete(:email)
           }
         }
+        company.delete(:email)
       end
       if company[:phone_number]
         company[:PhoneNumbers] << {:Work => {
             :Value => company.delete(:phone_number)
           }
         }
+        company.delete(:phone_number)
       end
       if company[:mobile_phone_number]
         company[:PhoneNumbers] << {:Mobile => {
             :Value => company.delete(:mobile_phone_number)
           }
         }
+        company.delete(:mobile_phone_number)
       end
       if company[:billing_address]
         address = {
