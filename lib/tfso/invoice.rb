@@ -46,6 +46,8 @@ module TFSO
     end
 
     def transform_attributes(invoice, items)
+      invoice.compact!
+      items.compact!
       state = case invoice[:state]
       when :invoice
         'Invoiced'

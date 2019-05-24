@@ -53,6 +53,7 @@ module TFSO
     end
 
     def transform_attributes(company)
+      company.compact!
       company[:EmailAddresses] ||= []
       company[:PhoneNumbers] ||= []
       company[:Addresses] ||= []
