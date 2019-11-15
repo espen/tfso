@@ -18,6 +18,17 @@ class TFSOTest < Minitest::Test
     assert_equal 'Webservices', identites.find{|identity|identity[:id] == ENV['TFSO_IDENTITY_ID']}[:user][:name]
   end
 
+  def test_fail_with_incorrect_auth
+    auth = TFSO::Authentication.new(ENV['TFSO_APPLICATION_ID'])
+    assert_raises TFSO::Errors::Authentication do
+      auth.authenticate(
+        'foo',
+        'bar',
+        ENV['TFSO_IDENTITY_ID']
+      )
+    end
+  end
+
   def test_can_get_type_groups
     auth = TFSO::Authentication.new(ENV['TFSO_APPLICATION_ID'])
     auth.authenticate(

@@ -6,12 +6,13 @@ module TFSO
     URL = 'https://api.24sevenoffice.com/CRM/Company/V001/CompanyService.asmx?wsdl'
 
     def initialize(auth)
+      ensure_authenticated(auth)
       self.session_id = auth.session_id
       intialize_savon_client
     end
 
     def find(search_params)
-      response = savon_client.call(:get_companies, message: {searchParams: search_params, returnProperties: {string: ['Id', 'OrganizationNumber', 'NickName', 'Country', 'Addresses', 'EmailAddresses', 'PhoneNumbers', 'InvoiceLanguage', 'TypeGroup', 'DistributionMethod', 'Currency'] } }, cookies: @cookies)
+      response = savon_client.call(:get_companies, message: {searchParams: search_params, returnProperties: {string: ['Id', 'OrganizationNumber', 'NickName', 'Country', 'Addresses', 'EmailAddresses', 'PhoneNumbers', 'InvoiceLanguage', 'TypeGroup', 'DistributionMethod', 'Currency']}}, cookies: @cookies)
       result = response.body[:get_companies_response][:get_companies_result]
       if result
         if result[:company].class == Hash
@@ -35,7 +36,7 @@ module TFSO
     end
 
     def create(company_info)
-      response = savon_client.call(:save_companies, message: {companies: [{Company: company_info}] }, cookies: @cookies)
+      response = savon_client.call(:save_companies, message: {companies: [{Company: company_info}]}, cookies: @cookies)
       result = response.body[:save_companies_response][:save_companies_result]
       if result
         if result[:company].class == Hash
@@ -109,13 +110,13 @@ module TFSO
         company.delete(:billing_address)
       end
       if company[:tfso]
-        company[:tfso].keys.each{|k| company[k] = company[:tfso].delete(k) }
+        company[:tfso].keys.each{|k| company[k] = company[:tfso].delete(k)}
         company.delete(:tfso)
       end
 
       mappings = {:name => :Name, :nickname => :NickName, :gov_no => :OrganizationNumber, :country_code => :Country}
 
-      company.keys.each { |k| company[ mappings[k] ] = company.delete(k) if mappings[k] }
+      company.keys.each {|k| company[ mappings[k] ] = company.delete(k) if mappings[k]}
       company
     end
 

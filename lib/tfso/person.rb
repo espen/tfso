@@ -6,6 +6,7 @@ module TFSO
     URL = 'https://webservices.24sevenoffice.com/CRM/Contact/PersonService.asmx?WSDL'
 
     def initialize(auth)
+      ensure_authenticated(auth)
       self.session_id = auth.session_id
       intialize_savon_client
     end

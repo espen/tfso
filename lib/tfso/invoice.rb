@@ -6,6 +6,7 @@ module TFSO
     URL = 'https://api.24sevenoffice.com/Economy/InvoiceOrder/V001/InvoiceService.asmx?wsdl'
 
     def initialize(auth)
+      ensure_authenticated(auth)
       self.session_id = auth.session_id
       intialize_savon_client
     end
@@ -41,7 +42,7 @@ module TFSO
     end
 
     def create(order_attributes)
-      response = savon_client.call(:save_invoices, message: {invoices: [{InvoiceOrder: order_attributes }] }, cookies: @cookies)
+      response = savon_client.call(:save_invoices, message: {invoices: [{InvoiceOrder: order_attributes}] }, cookies: @cookies)
       response.body[:save_invoices_response][:save_invoices_result][:invoice_order]
     end
 
@@ -99,7 +100,7 @@ module TFSO
             Quantity: item[:quantity].to_f
           }
         }
-        invoice_info[:InvoiceRows] = { :InvoiceRow => invoiceRows }
+        invoice_info[:InvoiceRows] = {:InvoiceRow => invoiceRows}
       end
       invoice_info
     end

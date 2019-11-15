@@ -1,6 +1,7 @@
 require 'savon'
-require "tfso/version"
+require 'tfso/version'
 require 'tfso/helpers'
+require 'tfso/errors'
 require 'tfso/authentication'
 require 'tfso/client'
 require 'tfso/company'

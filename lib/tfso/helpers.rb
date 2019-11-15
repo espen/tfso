@@ -1,13 +1,18 @@
 module TFSO
 
   module Helpers
+
     def intialize_savon_client
       @savon_client = Savon.client(wsdl: self.class::URL, convert_request_keys_to: :none)
-      if defined?(Rails) && Rails.env.development?
+      if ENV['RACK_ENV'] == 'test' || defined?(Rails) && Rails.env.development?
         @savon_client.globals.proxy('http://localhost:8080')
         @savon_client.globals.ssl_verify_mode(:none)
       end
       @savon_client.globals.unwrap(true)
+    end
+
+    def ensure_authenticated(auth)
+      auth.authenticated?
     end
 
     def savon_client

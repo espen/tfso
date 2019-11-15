@@ -14,17 +14,19 @@ module TFSO
     end
 
     def authenticated?
-      response = savon_client.call(:has_session, cookies: @cookies )
+      response = savon_client.call(:has_session, cookies: @cookies)
+      raise Errors::Authentication, 'Not authenticated' if !response.body[:has_session_response][:has_session_result]
       response.body[:has_session_response][:has_session_result]
     end
 
     def authenticate(username, password, identity_id = nil)
-      response = savon_client.call(:login, message: { credential: {Username: username, Password: password, IdentityId: identity_id, ApplicationId: application_id} })
+      response = savon_client.call(:login, message: { credential: {Username: username, Password: password, IdentityId: identity_id, ApplicationId: application_id}})
+      raise Errors::Authentication, 'Incorrect credentials' if response.body[:login_response][:login_result].blank?
       self.session_id = response.body[:login_response][:login_result]
     end
 
     def identities
-      response = savon_client.call(:get_identities, cookies: @cookies )
+      response = savon_client.call(:get_identities, cookies: @cookies)
       list = response.body[:get_identities_response][:get_identities_result][:identity]
       if list.is_a?(Hash)
         [list]

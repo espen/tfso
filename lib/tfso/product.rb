@@ -6,6 +6,7 @@ module TFSO
     URL = 'https://api.24sevenoffice.com/Logistics/Product/V001/ProductService.asmx?WSDL'
 
     def initialize(auth)
+      ensure_authenticated(auth)
       self.session_id = auth.session_id
       intialize_savon_client
     end
