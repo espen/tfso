@@ -96,13 +96,13 @@ module TFSO
           if item[:type] == :text
             invoiceRows << {:InvoiceRow => {
               Type: 'Text',
-              Name: item[:description]
+              Name: item[:name]
             }}
           else
             invoiceRows << {:InvoiceRow => {
               Type: 'Normal',
               ProductId: item[:product_id],
-              Name: item[:description],
+              Name: item[:name],
               Price: item[:price].to_f,
               Quantity: item[:quantity].to_f
             }}
