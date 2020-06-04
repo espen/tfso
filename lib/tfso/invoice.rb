@@ -93,14 +93,22 @@ module TFSO
       if items.any?
         invoiceRows = []
         items.each {|item|
-          invoiceRows << {
-            ProductId: item[:product_id],
-            Name: item[:description],
-            Price: item[:price].to_f,
-            Quantity: item[:quantity].to_f
-          }
+          if item[:type] == :text
+            invoiceRows << {:InvoiceRow => {
+              Type: 'Text',
+              Name: item[:description]
+            }}
+          else
+            invoiceRows << {:InvoiceRow => {
+              Type: 'Normal',
+              ProductId: item[:product_id],
+              Name: item[:description],
+              Price: item[:price].to_f,
+              Quantity: item[:quantity].to_f
+            }}
+          end
         }
-        invoice_info[:InvoiceRows] = {:InvoiceRow => invoiceRows}
+        invoice_info[:InvoiceRows] = invoiceRows
       end
       invoice_info
     end
