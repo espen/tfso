@@ -41,7 +41,7 @@ module TFSO
     end
 
     def identity_id=(identity_id)
-      response = savon_client.call(:set_identity_by_id, message: {identityId: identity_id}, cookies: @cookies)
+      savon_client.call(:set_identity_by_id, message: {identityId: identity_id}, cookies: @cookies)
       @identity_id = identity_id
     end
 
