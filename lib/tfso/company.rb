@@ -41,7 +41,7 @@ module TFSO
       if result
         if result[:company].class == Hash
           if result[:company][:api_exception]
-            raise "Error when saving tfso company"
+            raise result[:company][:api_exception]
           else
             result[:company]
           end

@@ -31,7 +31,7 @@ module TFSO
       if result
         if result.class == Hash
           if result[:api_exception]
-            raise "Error when saving tfso person"
+            raise result[:api_exception]
           else
             result
           end
